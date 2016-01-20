@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:a="http://schemas.android.com/tools">
+    <item android:id="@+id/publish"
+          app:showAsAction="always"
+          android:icon="@drawable/ic_action_publish"
+          android:title="Publish"
+          />
+      <item android:id="@+id/subscribe"
+            app:showAsAction="always"
+            android:icon="@drawable/ic_action_subscribe"
+            android:title="Subscribe"
+            />
+      <item android:id="@+id/connect"
+            app:showAsAction="always"
+            android:icon="@drawable/ic_connect"
+            android:title="Connect"
+            />
+</menu>
