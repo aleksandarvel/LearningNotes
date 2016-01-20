@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="com.notes.learning.learningnotes"
           xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -31,10 +32,16 @@
                 android:value=".MainActivity" />
             </activity>
 
+        <activity android:name=".MessageActivity" />
+
         <provider
             android:name="com.notes.learning.database.MyTodoContentProvider"
             android:authorities="com.notes.learning.database" >
         </provider>
+
+        <!-- Mqtt Service -->
+        <service android:name="org.eclipse.paho.android.service.MqttService" >
+        </service>
 
     </application>
 

@@ -36,7 +36,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText5"
+        android:id="@+id/publish_message"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"/>
 

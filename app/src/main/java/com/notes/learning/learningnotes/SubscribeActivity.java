@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,8 @@ import android.widget.EditText;
 
 import com.notes.learning.database.MyTodoContentProvider;
 import com.notes.learning.database.TodoTable;
+
+import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -45,6 +48,15 @@ public class SubscribeActivity extends AppCompatActivity {
                 values.put(TodoTable.COLUMN_TOPIC, topic);
                 values.put(TodoTable.COLUMN_DATE, currentDateTimeString);
                 getContentResolver().insert(MyTodoContentProvider.CONTENT_URI, values);
+
+                try
+                {
+                    ConnectActivity.client.subscribe(topic);
+                }
+                catch (MqttException e)
+                {
+                    Log.d(getClass().getCanonicalName(), "Subscribe failed with reason code = " + e.getReasonCode());
+                }
             }
         });
     }

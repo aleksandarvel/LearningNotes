@@ -11,7 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.notes.learning.database.AreaCursorAdapter;
 import com.notes.learning.database.MyTodoContentProvider;
@@ -41,6 +44,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         lv.setAdapter(_adapter);
         _adapter.notifyDataSetChanged();
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                TextView tv = (TextView)view.findViewById(R.id.topic_name);
+                Intent intent = new Intent(MainActivity.this, MessageActivity.class);
+                intent.putExtra("topic", tv.getText().toString());
+                startActivity(intent);
+
+            }
+        });
 
     }
 
@@ -80,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String[] projection = {TodoTable.COLUMN_ID, TodoTable.COLUMN_TOPIC, TodoTable.COLUMN_DATE};
         CursorLoader cursorLoader = new CursorLoader(this,
-                MyTodoContentProvider.CONTENT_URI, projection, null, null, TodoTable.COLUMN_TOPIC+ " ASC");
+                MyTodoContentProvider.CONTENT_URI, projection, null, null, TodoTable.COLUMN_DATE+ " DESC");
         return cursorLoader;
     }
 
