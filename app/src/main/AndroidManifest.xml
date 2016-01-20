@@ -15,6 +15,27 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".ConnectActivity" android:label="Connect">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".PublishActivity" android:label="Publish Message">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".SubscribeActivity" android:label="Subscribe Topic">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+            </activity>
+
+        <provider
+            android:name="com.notes.learning.database.MyTodoContentProvider"
+            android:authorities="com.notes.learning.database" >
+        </provider>
+
     </application>
 
 </manifest>
