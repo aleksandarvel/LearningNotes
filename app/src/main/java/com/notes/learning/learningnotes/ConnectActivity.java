@@ -1,5 +1,7 @@
 package com.notes.learning.learningnotes;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
@@ -22,9 +24,10 @@ public class ConnectActivity extends AppCompatActivity {
     String uri, port1, username, password;
     EditText server_edit, port_edit, username_edit, password_edit;
     Button connect;
-    public static MqttClient client;
+    public static MqttClient client = null;
     MqttConnectOptions options;
-
+    public static final String MYPREFERENCES = "MyPrefs";
+    SharedPreferences sharedpreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +36,6 @@ public class ConnectActivity extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.show();
-
-        client = null;
-
-
 
         connect = (Button)findViewById(R.id.connect);
         connect.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +67,14 @@ public class ConnectActivity extends AppCompatActivity {
                 {
                     Log.d(getClass().getCanonicalName(), "Connection attempt failed with reason code = " + e.getReasonCode() + ":" + e.getCause());
                 }
+
+                sharedpreferences = getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor= sharedpreferences.edit();
+
+                editor.putString("uri", uri);
+                editor.putString("port", port1);
+                editor.commit();
+
             }
         });
 }

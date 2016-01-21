@@ -1,6 +1,7 @@
 package com.notes.learning.learningnotes;
 
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import com.notes.learning.database.MyTodoContentProvider;
 import com.notes.learning.database.TodoTable;
 
+import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.text.DateFormat;
@@ -27,6 +29,8 @@ public class SubscribeActivity extends AppCompatActivity {
     String topic;
     EditText sub_edit;
     String currentDateTimeString;
+    SharedPreferences mSharedPreferences;
+    public static MqttClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +40,7 @@ public class SubscribeActivity extends AppCompatActivity {
         Button subscribe = (Button)findViewById(R.id.button_subscribe);
 
         currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+
 
 
 
