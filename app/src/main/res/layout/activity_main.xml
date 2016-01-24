@@ -15,6 +15,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/topic_list"
         android:divider="#FF60B461"
-        android:dividerHeight="2dp"
+        android:dividerHeight="1dp"
         ></ListView>
 </RelativeLayout>

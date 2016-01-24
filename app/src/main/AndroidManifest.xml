@@ -2,6 +2,9 @@
 <manifest package="com.notes.learning.learningnotes"
           xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -37,6 +40,10 @@
         <provider
             android:name="com.notes.learning.database.MyTodoContentProvider"
             android:authorities="com.notes.learning.database" >
+        </provider>
+        <provider
+            android:name="com.notes.learning.subscribedatabase.SubscribeTodoContentProvider"
+            android:authorities="com.notes.learning.subscribedatabase" >
         </provider>
 
         <!-- Mqtt Service -->
