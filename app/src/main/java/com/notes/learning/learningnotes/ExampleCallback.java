@@ -27,6 +27,8 @@ public class ExampleCallback extends AppCompatActivity implements MqttCallback {
 
     @Override
     public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
+        String date;
+        ContentValues values;
         String messageBody = new String(mqttMessage.getPayload());
 
         Log.d("message", messageBody);

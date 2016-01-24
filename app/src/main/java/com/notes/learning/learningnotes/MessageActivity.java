@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
-import com.notes.learning.database.TodoTable;
 import com.notes.learning.subscribedatabase.SubscribeAreaCursorAdapter;
 import com.notes.learning.subscribedatabase.SubscribeTodoContentProvider;
 import com.notes.learning.subscribedatabase.SubscribeTodoTable;
@@ -34,7 +33,7 @@ public class MessageActivity extends AppCompatActivity implements LoaderManager.
 
         ListView lv= (ListView)findViewById(R.id.message_list);
         getLoaderManager().initLoader(0, null, this);
-        Cursor c = getContentResolver().query(SubscribeTodoContentProvider.CONTENT_URI, null, null, null, TodoTable.COLUMN_DATE + " DESC");
+        Cursor c = getContentResolver().query(SubscribeTodoContentProvider.CONTENT_URI, null, null, null, SubscribeTodoTable.COLUMN_DATE + " DESC");
 
         _adapter = new SubscribeAreaCursorAdapter(this,c);
 
@@ -47,7 +46,7 @@ public class MessageActivity extends AppCompatActivity implements LoaderManager.
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String[] projection = {SubscribeTodoTable.COLUMN_ID, SubscribeTodoTable.COLUMN_TOPIC, SubscribeTodoTable.COLUMN_MESSAGE ,SubscribeTodoTable.COLUMN_DATE};
         CursorLoader cursorLoader = new CursorLoader(this,
-                SubscribeTodoContentProvider.CONTENT_URI, projection, null, null, TodoTable.COLUMN_DATE+ " DESC");
+                SubscribeTodoContentProvider.CONTENT_URI, projection, null, null, SubscribeTodoTable.COLUMN_DATE+ " DESC");
         return cursorLoader;
     }
 
