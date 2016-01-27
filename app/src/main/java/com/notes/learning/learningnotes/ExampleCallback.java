@@ -1,6 +1,8 @@
 package com.notes.learning.learningnotes;
 
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -18,8 +20,7 @@ import java.util.Date;
  * Created by Aleksandar on 1/20/2016.
  */
 public class ExampleCallback extends AppCompatActivity implements MqttCallback {
-    String date;
-    ContentValues values;
+
     @Override
     public void connectionLost(Throwable throwable) {
 
@@ -39,6 +40,13 @@ public class ExampleCallback extends AppCompatActivity implements MqttCallback {
         values.put(SubscribeTodoTable.COLUMN_MESSAGE, messageBody);
         values.put(SubscribeTodoTable.COLUMN_DATE, date);
         getContentResolver().insert(SubscribeTodoContentProvider.CONTENT_URI, values);
+
+        SharedPreferences sharedpreferences = getSharedPreferences("Prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor= sharedpreferences.edit();
+
+        editor.putString("message", messageBody);
+
+        editor.commit();
 
 
     }

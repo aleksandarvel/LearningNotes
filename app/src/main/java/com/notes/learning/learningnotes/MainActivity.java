@@ -1,9 +1,11 @@
 package com.notes.learning.learningnotes;
 
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -23,6 +25,7 @@ import com.notes.learning.database.TodoTable;
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     AreaCursorAdapter _adapter;
+    TextView primer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +52,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                TextView tv = (TextView)view.findViewById(R.id.topic_name);
+                TextView tv = (TextView) view.findViewById(R.id.topic_name);
                 Intent intent = new Intent(MainActivity.this, MessageActivity.class);
                 intent.putExtra("topic", tv.getText().toString());
                 startActivity(intent);
 
             }
         });
+
+        primer = (TextView)findViewById(R.id.primer);
+        SharedPreferences sharedpreferences = getSharedPreferences("Prefs", Context.MODE_PRIVATE);
+        String mess = sharedpreferences.getString("message", "message123");
+        primer.setText(mess);
 
     }
 

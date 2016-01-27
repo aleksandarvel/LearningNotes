@@ -57,7 +57,7 @@ public class ConnectActivity extends AppCompatActivity {
 
                           clientId = MqttClient.generateClientId();
                          client = new MqttAndroidClient(getApplicationContext(), "tcp://"+uri+":"+port1,
-                                "h123");
+                                clientId);
 
                 try {
                     IMqttToken token = client.connect();
