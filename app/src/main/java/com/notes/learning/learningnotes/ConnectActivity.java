@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +34,10 @@ public class ConnectActivity extends AppCompatActivity {
     SharedPreferences sharedpreferences;
     public MqttAndroidClient client;
     public String clientId;
+    MenuItem item;
+    Menu menu;
+    MenuInflater inflater;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +46,7 @@ public class ConnectActivity extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.show();
+
 
         connect = (Button)findViewById(R.id.connect);
         connect.setOnClickListener(new View.OnClickListener() {
@@ -53,11 +60,9 @@ public class ConnectActivity extends AppCompatActivity {
                     uri = server_edit.getText().toString();
                     port1 = port_edit.getText().toString();
 
-
-
-                          clientId = MqttClient.generateClientId();
-                         client = new MqttAndroidClient(getApplicationContext(), "tcp://"+uri+":"+port1,
-                                clientId);
+                clientId = MqttClient.generateClientId();
+                client = new MqttAndroidClient(getApplicationContext(), "tcp://"+uri+":"+port1,
+                        clientId);
 
                 try {
                     IMqttToken token = client.connect();
@@ -76,12 +81,15 @@ public class ConnectActivity extends AppCompatActivity {
                             editor.putString("clientId",clientId);
                             editor.commit();
 
+                            item.setVisible(true);
+
                         }
 
                         @Override
                         public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                             // Something went wrong e.g. connection timeout or firewall problems
                             Toast.makeText(getBaseContext(), "Connection failed", Toast.LENGTH_SHORT).show();
+                            item.setVisible(false);
 
                         }
                     });
@@ -93,7 +101,19 @@ public class ConnectActivity extends AppCompatActivity {
 
             }
         });
+
 }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        inflater = getMenuInflater();
+        inflater.inflate(R.menu.connect_menu, menu);
+
+        item = menu.findItem(R.id.disconnect_menu);
+
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -103,6 +123,27 @@ public class ConnectActivity extends AppCompatActivity {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
+            case R.id.disconnect_menu:
+            {
+                try {
+                    IMqttToken disconToken = client.disconnect();
+                    disconToken.setActionCallback(new IMqttActionListener() {
+                        @Override
+                        public void onSuccess(IMqttToken asyncActionToken) {
+                            // we are now successfully disconnected
+                         Toast.makeText(getApplicationContext(),"Successful disconnection",Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(IMqttToken asyncActionToken,
+                                              Throwable exception) {
+                            // something went wrong, but probably we are disconnected anyway
+                        }
+                    });
+                } catch (MqttException e) {
+                    e.printStackTrace();
+                }
+            }
             default:
                 return super.onOptionsItemSelected(item);
         }
