@@ -71,8 +71,6 @@ public class ConnectActivity extends AppCompatActivity {
                         public void onSuccess(IMqttToken asyncActionToken) {
                             // We are connected
                             Toast.makeText(getBaseContext(), "Successful connection", Toast.LENGTH_SHORT).show();
-                            client.setCallback(new ExampleCallback());
-
                             sharedpreferences = getSharedPreferences(MYPREFERENCES, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor= sharedpreferences.edit();
 

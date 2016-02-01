@@ -76,7 +76,6 @@ public class PublishActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(IMqttToken asyncActionToken) {
                             // We are connected
-                            Toast.makeText(getBaseContext(), "Successful connection", Toast.LENGTH_SHORT).show();
                             client.setCallback(new ExampleCallback());
 
                             try {
@@ -87,6 +86,9 @@ public class PublishActivity extends AppCompatActivity {
                                     message.setRetained(true);
                                 }
                                 client.publish(topic, message);
+
+                                Toast.makeText(getBaseContext(), "The message was successfully published!", Toast.LENGTH_SHORT).show();
+
                             } catch (UnsupportedEncodingException | MqttException e) {
                                 e.printStackTrace();
                             }
@@ -96,7 +98,7 @@ public class PublishActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                             // Something went wrong e.g. connection timeout or firewall problems
-                            Toast.makeText(getBaseContext(), "Connection failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getBaseContext(), "Unsuccessful publish", Toast.LENGTH_SHORT).show();
 
                         }
                     });

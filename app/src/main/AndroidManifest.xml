@@ -35,7 +35,11 @@
                 android:value=".MainActivity" />
             </activity>
 
-        <activity android:name=".MessageActivity" />
+        <activity android:name=".MessageActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".MainActivity" />
+        </activity>
 
         <provider
             android:name="com.notes.learning.database.MyTodoContentProvider"
